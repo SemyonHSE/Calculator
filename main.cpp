@@ -13,6 +13,7 @@ double Cos(double x);
 double Tg(double x);
 double Ctg(double x);
 bool calculation(Stack *NumberStack, Stack *OperatorStack);
+
 std::string replaceSymbolWithNumber(std::string& a) {
     int ln = a.length();
     //std::string zam = std::to_string(b);
@@ -20,7 +21,7 @@ std::string replaceSymbolWithNumber(std::string& a) {
     while (flag)
     {
         flag = 0;
-        if (97<=a[0] && a[0]<=122 && (a[1] < 97 || a[1]>122))
+        if (97<=a[0] && a[0]<=122 && (a[1] < 97 || a[1]>122) && a[0]!='p')
         {
             std::string param;
             std::cout << a[0] << '=';
@@ -28,7 +29,7 @@ std::string replaceSymbolWithNumber(std::string& a) {
             char tek = a[0];
             for (int j = 1; j < ln; ++j)
             {
-                if (a[j] == tek && (a[j - 1] < 97 || a[j - 1]>122) && (a[j + 1] < 97 || a[j + 1]>122))
+                if (a[j] == tek && (a[j - 1] < 97 || a[j - 1]>122) && (a[j + 1] < 97 || a[j + 1]>122) && a[j]!='p')
                 {
                     a.replace(j, 1, param);
                 }
@@ -37,7 +38,7 @@ std::string replaceSymbolWithNumber(std::string& a) {
         }
         for (int i = 1; i < ln; ++i)
         {
-            if (a[i] >= 97 && a[i] <= 122 && (a[i - 1] < 97 || a[i - 1]>122) && (a[i + 1] < 97 || a[i + 1]>122))
+            if (a[i] >= 97 && a[i] <= 122 && (a[i - 1] < 97 || a[i - 1]>122) && (a[i + 1] < 97 || a[i + 1]>122) && a[i]!='p')
             {
                 std::string param;
                 std::cout << a[i] << '=';
@@ -45,7 +46,7 @@ std::string replaceSymbolWithNumber(std::string& a) {
                 char tek = a[i];
                 for (int j = i + 1; j < ln; ++j)
                 {
-                    if (a[j] == tek && (a[j - 1] < 97 || a[j - 1]>122) && (a[j + 1] < 97 || a[j + 1]>122))
+                    if (a[j] == tek && (a[j - 1] < 97 || a[j - 1]>122) && (a[j + 1] < 97 || a[j + 1]>122) && a[i] != 'p')
                     {
                         a.replace(j, 1, param);
                     }
@@ -54,7 +55,7 @@ std::string replaceSymbolWithNumber(std::string& a) {
             }
         }
         ln = a.length();
-        if (97 <= a[0] && a[0] <= 122 && (a[1] < 97 || a[1]>122))
+        if (97 <= a[0] && a[0] <= 122 && (a[1] < 97 || a[1]>122)&& a[0] != 'p')
         {
             flag = 1;
         }
@@ -62,7 +63,7 @@ std::string replaceSymbolWithNumber(std::string& a) {
         {
             for (int i = 1; i < ln; ++i)
             {
-                if (a[i] >= 97 && a[i] <= 122 && (a[i - 1] < 97 || a[i - 1]>122) && (a[i + 1] < 97 || a[i + 1]>122))
+                if (a[i] >= 97 && a[i] <= 122 && (a[i - 1] < 97 || a[i - 1]>122) && (a[i + 1] < 97 || a[i + 1]>122)&& a[i] != 'p')
                 {
                     flag = 1;
                 }
@@ -226,6 +227,12 @@ bool calculation(Stack *NumberStack, Stack *OperatorStack){
     double operand2, operand1, rez;
     operand2 = NumberStack->pop();
     if (OperatorStack->show_top()=='+'){
+        /*
+        if (NumberStack->isEmpty())
+        {
+            throw "\nWrong Expression!\n";
+        }
+        */
         operand1 = NumberStack->pop();
         rez = operand1 + operand2;
         NumberStack->push(rez);
@@ -298,7 +305,6 @@ bool calculation(Stack *NumberStack, Stack *OperatorStack){
     }
     return true;
 }
-
 
 
 
