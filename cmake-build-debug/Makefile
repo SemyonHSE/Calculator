@@ -128,6 +128,30 @@ Calculator/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Calculator.dir\build.make CMakeFiles/Calculator.dir/build
 .PHONY : Calculator/fast
 
+ExpressionCalculator.obj: ExpressionCalculator.cpp.obj
+.PHONY : ExpressionCalculator.obj
+
+# target to build an object file
+ExpressionCalculator.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Calculator.dir\build.make CMakeFiles/Calculator.dir/ExpressionCalculator.cpp.obj
+.PHONY : ExpressionCalculator.cpp.obj
+
+ExpressionCalculator.i: ExpressionCalculator.cpp.i
+.PHONY : ExpressionCalculator.i
+
+# target to preprocess a source file
+ExpressionCalculator.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Calculator.dir\build.make CMakeFiles/Calculator.dir/ExpressionCalculator.cpp.i
+.PHONY : ExpressionCalculator.cpp.i
+
+ExpressionCalculator.s: ExpressionCalculator.cpp.s
+.PHONY : ExpressionCalculator.s
+
+# target to generate assembly for a file
+ExpressionCalculator.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Calculator.dir\build.make CMakeFiles/Calculator.dir/ExpressionCalculator.cpp.s
+.PHONY : ExpressionCalculator.cpp.s
+
 main.obj: main.cpp.obj
 .PHONY : main.obj
 
@@ -185,6 +209,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Calculator
+	@echo ... ExpressionCalculator.obj
+	@echo ... ExpressionCalculator.i
+	@echo ... ExpressionCalculator.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

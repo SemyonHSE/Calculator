@@ -82,6 +82,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="Z:/c++/Calculator/ExpressionCalculator.cpp">
+			<Option target="Calculator"/>
+		</Unit>
+		<Unit filename="Z:/c++/Calculator/ExpressionCalculator.h">
+			<Option target="Calculator"/>
+		</Unit>
 		<Unit filename="Z:/c++/Calculator/main.cpp">
 			<Option target="Calculator"/>
 		</Unit>
