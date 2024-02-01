@@ -12,7 +12,7 @@ double Sin(double x);
 double Cos(double x);
 double Tg(double x);
 double Ctg(double x);
-bool calculation(Stack *NumberStack, Stack *OperatorStack);
+bool calculation(Stack* NumberStack, Stack* OperatorStack);
 
 std::string replaceSymbolWithNumber(std::string& a) {
     int ln = a.length();
@@ -21,7 +21,7 @@ std::string replaceSymbolWithNumber(std::string& a) {
     while (flag)
     {
         flag = 0;
-        if (97<=a[0] && a[0]<=122 && (a[1] < 97 || a[1]>122) && a[0]!='p'&& a[0] != 'e')
+        if (97 <= a[0] && a[0] <= 122 && (a[1] < 97 || a[1]>122) && a[0] != 'p' && a[0] != 'e')
         {
             std::string param;
             std::cout << a[0] << '=';
@@ -29,7 +29,7 @@ std::string replaceSymbolWithNumber(std::string& a) {
             char tek = a[0];
             for (int j = 1; j < ln; ++j)
             {
-                if (a[j] == tek && (a[j - 1] < 97 || a[j - 1]>122) && (a[j + 1] < 97 || a[j + 1]>122) && a[j]!='p' && a[j] != 'e')
+                if (a[j] == tek && (a[j - 1] < 97 || a[j - 1]>122) && (a[j + 1] < 97 || a[j + 1]>122))
                 {
                     a.replace(j, 1, param);
                 }
@@ -38,7 +38,7 @@ std::string replaceSymbolWithNumber(std::string& a) {
         }
         for (int i = 1; i < ln; ++i)
         {
-            if (a[i] >= 97 && a[i] <= 122 && (a[i - 1] < 97 || a[i - 1]>122) && (a[i + 1] < 97 || a[i + 1]>122) && a[i]!='p' && a[i] != 'e')
+            if (a[i] >= 97 && a[i] <= 122 && (a[i - 1] < 97 || a[i - 1]>122) && (a[i + 1] < 97 || a[i + 1]>122) && a[i] != 'p' && a[i] != 'e')
             {
                 std::string param;
                 std::cout << a[i] << '=';
@@ -55,7 +55,7 @@ std::string replaceSymbolWithNumber(std::string& a) {
             }
         }
         ln = a.length();
-        if (97 <= a[0] && a[0] <= 122 && (a[1] < 97 || a[1]>122)&& a[0] != 'p' && a[0] != 'e')
+        if (97 <= a[0] && a[0] <= 122 && (a[1] < 97 || a[1]>122) && a[0] != 'p' && a[0] != 'e')
         {
             flag = 1;
         }
@@ -63,7 +63,7 @@ std::string replaceSymbolWithNumber(std::string& a) {
         {
             for (int i = 1; i < ln; ++i)
             {
-                if (a[i] >= 97 && a[i] <= 122 && (a[i - 1] < 97 || a[i - 1]>122) && (a[i + 1] < 97 || a[i + 1]>122)&& a[i] != 'p' && a[i] != 'e')
+                if (a[i] >= 97 && a[i] <= 122 && (a[i - 1] < 97 || a[i - 1]>122) && (a[i + 1] < 97 || a[i + 1]>122) && a[i] != 'p' && a[i] != 'e')
                 {
                     flag = 1;
                 }
@@ -81,8 +81,8 @@ int main() {
         std::cout << "Type your expression" << std::endl;
         std::string str;
         getline(std::cin, str);
-        str =replaceSymbolWithNumber(str);
-        std::stringstream sstr{str};
+        str = replaceSymbolWithNumber(str);
+        std::stringstream sstr{ str };
 
         char symbol; //Переменная, в которую будет записываться текущий обрабатываемый символ
         double value;
@@ -148,14 +148,14 @@ int main() {
                     continue;
                 }
                 if (OperatorStack.size() != 0 && priority(symbol) > priority(
-                        OperatorStack.show_top())) { //Если стек с операциями НЕ пуст, но приоритет текущей операции выше верхней в стеке с операциями
+                    OperatorStack.show_top())) { //Если стек с операциями НЕ пуст, но приоритет текущей операции выше верхней в стеке с операциями
                     OperatorStack.push(symbol); //Операция кладется в стек с операциями
                     sstr.ignore();
                     continue;
                 }
 
                 if (OperatorStack.size() != 0 && priority(symbol) <= priority(
-                        OperatorStack.show_top())) {//Если стек с операциями НЕ пуст, но приоритет текущей операции ниже либо равен верхней в стеке с операциями
+                    OperatorStack.show_top())) {//Если стек с операциями НЕ пуст, но приоритет текущей операции ниже либо равен верхней в стеке с операциями
                     if (calculation(&NumberStack, &OperatorStack) == false) { //Если функция вернет "false", то прекращаем работу
                         system("pause");
                         return 0;
@@ -174,12 +174,14 @@ int main() {
                         false) { //Если функция вернет "false", то прекращаем работу
                         system("pause");
                         return 0;
-                    } else continue; //Если все хорошо
+                    }
+                    else continue; //Если все хорошо
                 }
                 OperatorStack.pop();
                 sstr.ignore();
                 continue;
-            } else { //Если прочитан какой-то странный символ
+            }
+            else { //Если прочитан какой-то странный символ
                 std::cout << "\nWrong Expression!\n";
                 system("pause");
                 return 0;
@@ -189,7 +191,8 @@ int main() {
             if (calculation(&NumberStack, &OperatorStack) == false) { //Если функция вернет "false", то прекращаем работу
                 system("pause");
                 return 0;
-            } else continue; //Если все хорошо
+            }
+            else continue; //Если все хорошо
         }
         std::cout << "Answer: " << NumberStack.show_top() << std::endl; //Выводим ответ
         system("pause");
@@ -223,29 +226,29 @@ double Tg(double x) {
 double Ctg(double x) {
     return Cos(x) / Sin(x);
 }
-bool calculation(Stack *NumberStack, Stack *OperatorStack){
+bool calculation(Stack* NumberStack, Stack* OperatorStack) {
     double operand2, operand1, rez;
     operand2 = NumberStack->pop();
-    if (OperatorStack->show_top()=='+'){
+    if (OperatorStack->show_top() == '+') {
         operand1 = NumberStack->pop();
         rez = operand1 + operand2;
         NumberStack->push(rez);
         OperatorStack->pop();
     }
-    else if(OperatorStack->show_top()=='-'){
+    else if (OperatorStack->show_top() == '-') {
         operand1 = NumberStack->pop();
         rez = operand1 - operand2;
         NumberStack->push(rez);
         OperatorStack->pop();
     }
-    else if(OperatorStack->show_top()=='*'){
+    else if (OperatorStack->show_top() == '*') {
         operand1 = NumberStack->pop();
         rez = operand1 * operand2;
         NumberStack->push(rez);
         OperatorStack->pop();
     }
-    else if(OperatorStack->show_top()=='/' ){
-        if (operand2 ==0){
+    else if (OperatorStack->show_top() == '/') {
+        if (operand2 == 0) {
             cerr << "\nIt cannot be divided by 0!\n";
             return false;
         }
@@ -254,24 +257,24 @@ bool calculation(Stack *NumberStack, Stack *OperatorStack){
         NumberStack->push(rez);
         OperatorStack->pop();
     }
-    else if(OperatorStack->show_top()=='^'){
+    else if (OperatorStack->show_top() == '^') {
         operand1 = NumberStack->pop();
         rez = pow(operand1, operand2);
         NumberStack->push(rez);
         OperatorStack->pop();
     }
-    else if (OperatorStack->show_top()=='s' ){
+    else if (OperatorStack->show_top() == 's') {
         rez = sin(operand2);
         NumberStack->push(rez);
         OperatorStack->pop();
     }
-    else if (OperatorStack->show_top()=='c' ){
+    else if (OperatorStack->show_top() == 'c') {
         rez = cos(operand2);
         NumberStack->push(rez);
         OperatorStack->pop();
     }
-    else if(OperatorStack->show_top()=='t' ){
-        if (cos(operand2)==0){
+    else if (OperatorStack->show_top() == 't') {
+        if (cos(operand2) == 0) {
             cerr << "\nInvalid argument for tangent!\n";
             return false;
         }
@@ -279,8 +282,8 @@ bool calculation(Stack *NumberStack, Stack *OperatorStack){
         NumberStack->push(rez);
         OperatorStack->pop();
     }
-    else if(OperatorStack->show_top()=='g'){
-        if (sin(operand2)==0){
+    else if (OperatorStack->show_top() == 'g') {
+        if (sin(operand2) == 0) {
             cerr << "\nInvalid argument for cotangence!\n";
             return false;
         }
@@ -288,28 +291,14 @@ bool calculation(Stack *NumberStack, Stack *OperatorStack){
         NumberStack->push(rez);
         OperatorStack->pop();
     }
-    else if(OperatorStack->show_top()=='e'){
+    else if (OperatorStack->show_top() == 'e') {
         rez = exp(operand2);
         NumberStack->push(rez);
         OperatorStack->pop();
     }
-    else{
-        cerr<<"\nWrong Expression!\n";
+    else {
+        cerr << "\nWrong Expression!\n";
         return false;
     }
     return true;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
