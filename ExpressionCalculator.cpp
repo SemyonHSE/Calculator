@@ -129,7 +129,6 @@ void ExpressionCalculator::runCalculator() {
         }
 
         std::cout << "Answer: " << NumberStack.show_top() << std::endl;
-        system("pause");
     }
 }
 
