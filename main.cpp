@@ -29,7 +29,7 @@ std::string replaceSymbolWithNumber(std::string& a) {
             char tek = a[0];
             for (int j = 1; j < ln; ++j)
             {
-                if (a[j] == tek && (a[j - 1] < 97 || a[j - 1]>122) && (a[j + 1] < 97 || a[j + 1]>122) && a[j]!='p')
+                if (a[j] == tek && (a[j - 1] < 97 || a[j - 1]>122) && (a[j + 1] < 97 || a[j + 1]>122) && a[j]!='p' && a[j] != 'e')
                 {
                     a.replace(j, 1, param);
                 }
@@ -38,7 +38,7 @@ std::string replaceSymbolWithNumber(std::string& a) {
         }
         for (int i = 1; i < ln; ++i)
         {
-            if (a[i] >= 97 && a[i] <= 122 && (a[i - 1] < 97 || a[i - 1]>122) && (a[i + 1] < 97 || a[i + 1]>122) && a[i]!='p')
+            if (a[i] >= 97 && a[i] <= 122 && (a[i - 1] < 97 || a[i - 1]>122) && (a[i + 1] < 97 || a[i + 1]>122) && a[i]!='p' && a[i] != 'e')
             {
                 std::string param;
                 std::cout << a[i] << '=';
@@ -46,7 +46,7 @@ std::string replaceSymbolWithNumber(std::string& a) {
                 char tek = a[i];
                 for (int j = i + 1; j < ln; ++j)
                 {
-                    if (a[j] == tek && (a[j - 1] < 97 || a[j - 1]>122) && (a[j + 1] < 97 || a[j + 1]>122) && a[i] != 'p')
+                    if (a[j] == tek && (a[j - 1] < 97 || a[j - 1]>122) && (a[j + 1] < 97 || a[j + 1]>122) && a[j] != 'p' && a[j] != 'e')
                     {
                         a.replace(j, 1, param);
                     }
@@ -55,7 +55,7 @@ std::string replaceSymbolWithNumber(std::string& a) {
             }
         }
         ln = a.length();
-        if (97 <= a[0] && a[0] <= 122 && (a[1] < 97 || a[1]>122)&& a[0] != 'p')
+        if (97 <= a[0] && a[0] <= 122 && (a[1] < 97 || a[1]>122)&& a[0] != 'p' && a[0] != 'e')
         {
             flag = 1;
         }
@@ -63,7 +63,7 @@ std::string replaceSymbolWithNumber(std::string& a) {
         {
             for (int i = 1; i < ln; ++i)
             {
-                if (a[i] >= 97 && a[i] <= 122 && (a[i - 1] < 97 || a[i - 1]>122) && (a[i + 1] < 97 || a[i + 1]>122)&& a[i] != 'p')
+                if (a[i] >= 97 && a[i] <= 122 && (a[i - 1] < 97 || a[i - 1]>122) && (a[i + 1] < 97 || a[i + 1]>122)&& a[i] != 'p' && a[i] != 'e')
                 {
                     flag = 1;
                 }
@@ -227,12 +227,6 @@ bool calculation(Stack *NumberStack, Stack *OperatorStack){
     double operand2, operand1, rez;
     operand2 = NumberStack->pop();
     if (OperatorStack->show_top()=='+'){
-        /*
-        if (NumberStack->isEmpty())
-        {
-            throw "\nWrong Expression!\n";
-        }
-        */
         operand1 = NumberStack->pop();
         rez = operand1 + operand2;
         NumberStack->push(rez);
@@ -250,7 +244,7 @@ bool calculation(Stack *NumberStack, Stack *OperatorStack){
         NumberStack->push(rez);
         OperatorStack->pop();
     }
-    else if(OperatorStack->show_top()=='/'){
+    else if(OperatorStack->show_top()=='/' ){
         if (operand2 ==0){
             cerr << "\nIt cannot be divided by 0!\n";
             return false;
@@ -266,17 +260,17 @@ bool calculation(Stack *NumberStack, Stack *OperatorStack){
         NumberStack->push(rez);
         OperatorStack->pop();
     }
-    else if (OperatorStack->show_top()=='s'){
+    else if (OperatorStack->show_top()=='s' ){
         rez = sin(operand2);
         NumberStack->push(rez);
         OperatorStack->pop();
     }
-    else if (OperatorStack->show_top()=='c'){
+    else if (OperatorStack->show_top()=='c' ){
         rez = cos(operand2);
         NumberStack->push(rez);
         OperatorStack->pop();
     }
-    else if(OperatorStack->show_top()=='t'){
+    else if(OperatorStack->show_top()=='t' ){
         if (cos(operand2)==0){
             cerr << "\nInvalid argument for tangent!\n";
             return false;
