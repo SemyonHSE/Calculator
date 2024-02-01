@@ -1,3 +1,3 @@
-C:/Users/Kirill/Desktop/calc/Calculator/cmake-build-debug/CMakeFiles/Calculator.dir
-C:/Users/Kirill/Desktop/calc/Calculator/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Kirill/Desktop/calc/Calculator/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+D:/Семён/ВШЭ/Программирование С и С++/projects/calculator/Calculator/cmake-build-debug/CMakeFiles/Calculator.dir
+D:/Семён/ВШЭ/Программирование С и С++/projects/calculator/Calculator/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Семён/ВШЭ/Программирование С и С++/projects/calculator/Calculator/cmake-build-debug/CMakeFiles/rebuild_cache.dir
