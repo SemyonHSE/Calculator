@@ -10,10 +10,9 @@ int priority(char symbol);
 const double Pi = acos(-1);
 double Sin(double x);
 double Cos(double x);
+double Tg(double x);
 double Ctg(double x);
 bool calculation(Stack *NumberStack, Stack *OperatorStack);
-
-
 std::string replaceSymbolWithNumber(std::string& a) {
     int ln = a.length();
     //std::string zam = std::to_string(b);
@@ -73,116 +72,126 @@ std::string replaceSymbolWithNumber(std::string& a) {
     return a;
 }
 int main() {
-    Stack numStack; // Стек для хранения чисел
-    Stack opStack;  // Стек для хранения операций
+
+    Stack NumberStack;
+    Stack OperatorStack;
 
     while (true) {
-        std::cout << "Type an expression: ";
-        std::string inputStr;
+        std::cout << "Type your expression" << std::endl;
+        std::string str;
+        getline(std::cin, str);
+        str =replaceSymbolWithNumber(str);
+        std::stringstream sstr{str};
 
-        getline(std::cin, inputStr);
-        std::stringstream strStream{inputStr};
-
-        char currentSymbol;
-        double numericValue;
-        bool isNegative = true;
+        char symbol; //Переменная, в которую будет записываться текущий обрабатываемый символ
+        double value;
+        bool minus = true; //Нужен для того, чтобы программа смогла отличить унарный минус (-5) от вычитания (2-5)
 
         while (true) {
-            currentSymbol = strStream.peek();
-            if (currentSymbol == '\377')
-                break;
-            if (currentSymbol == ' ') {
-                strStream.ignore();
+            symbol = sstr.peek(); //Смотрим на первый символ
+            if (symbol == '\377')
+                break; //Если достигнут конец строки, выходим из цикла
+            if (symbol == ' ') { //Игнорирование пробелов
+                sstr.ignore();
                 continue;
             }
-            if (currentSymbol == 's' || currentSymbol == 'c' || currentSymbol == 't' || currentSymbol == 'e') {
-                char function[3];
+            if (symbol == 's' || symbol == 'c' || symbol == 't' || symbol == 'e') { //Если прочитана функция
+                char function[3]; //массив на 3 символа для определения типа прочитанной функции
                 for (int i = 0; i < 3; i++) {
-                    currentSymbol = strStream.peek();
-                    function[i] = currentSymbol;
-                    strStream.ignore();
+                    symbol = sstr.peek();
+                    function[i] = symbol;
+                    sstr.ignore();
                 }
-                if (function[0] == 's' && function[1] == 'i' && function[2] == 'n') {
-                    opStack.push('s');
+                if (function[0] == 's' && function[1] == 'i' && function[2] == 'n') { //Если прочитанная функция - синус
+                    OperatorStack.push('s'); //Операция кладется в стек с операциями
                     continue;
                 }
-                if (function[0] == 'c' && function[1] == 'o' && function[2] == 's') {
-                    opStack.push('c');
+                if (function[0] == 'c' && function[1] == 'o' &&
+                    function[2] == 's') { //Если прочитанная функция - косинус
+                    OperatorStack.push('c'); //Операция кладется в стек с операциями
                     continue;
                 }
-                if (function[0] == 't' && function[1] == 'a' && function[2] == 'n') {
-                    opStack.push('t');
+                if (function[0] == 't' && function[1] == 'a' &&
+                    function[2] == 'n') { //Если прочитанная функция - тангенс
+                    OperatorStack.push('t'); //Операция кладется в стек с операциями
                     continue;
                 }
-                if (function[0] == 'c' && function[1] == 't' && function[2] == 'g') {
-                    opStack.push('g');
+                if (function[0] == 'c' && function[1] == 't' &&
+                    function[2] == 'g') { //Если прочитанная функция - котангенс
+                    OperatorStack.push('g'); //Операция кладется в стек с операциями
                     continue;
                 }
-                if (function[0] == 'e' && function[1] == 'x' && function[2] == 'p') {
-                    opStack.push('e');
+                if (function[0] == 'e' && function[1] == 'x' &&
+                    function[2] == 'p') { //Если прочитанная функция - экспонента
+                    OperatorStack.push('e'); //Операция кладется в стек с операциями
                     continue;
                 }
             }
-            if (currentSymbol == 'p') {
-                numStack.push(Pi);
-                isNegative = false;
-                strStream.ignore();
+            if (symbol == 'p') { //Если прочитано число Пи
+                NumberStack.push(Pi); //Число кладется в стек с числами
+                minus = 0;
+                sstr.ignore();
                 continue;
             }
-            if (currentSymbol >= '0' && currentSymbol <= '9' || currentSymbol == '-' && isNegative == 1) {
-                strStream >> numericValue;
-                numStack.push(numericValue);
-                isNegative = false;
+            if (symbol >= '0' && symbol <= '9' || symbol == '-' && minus == 1) { //Если прочитано число
+                sstr >> value;
+                NumberStack.push(value); //Число кладется в стек с числами
+                minus = 0;
                 continue;
             }
-            if (currentSymbol == '+' || currentSymbol == '-' && isNegative == 0 || currentSymbol == '*' || currentSymbol == '/' || currentSymbol == '^') {
-                if (opStack.size() == 0) {
-                    opStack.push(currentSymbol);
-                    strStream.ignore();
+            if (symbol == '+' || symbol == '-' && minus == 0 || symbol == '*' || symbol == '/' ||
+                symbol == '^') { //Если прочитана операция
+                if (OperatorStack.size() == 0) { //Если стек с операциями пуст
+                    OperatorStack.push(symbol); //Операция кладется в стек с операциями
+                    sstr.ignore();
                     continue;
                 }
-                if (opStack.size() != 0 && priority(currentSymbol) > priority(opStack.show_top())) {
-                    opStack.push(currentSymbol);
-                    strStream.ignore();
+                if (OperatorStack.size() != 0 && priority(symbol) > priority(
+                        OperatorStack.show_top())) { //Если стек с операциями НЕ пуст, но приоритет текущей операции выше верхней в стеке с операциями
+                    OperatorStack.push(symbol); //Операция кладется в стек с операциями
+                    sstr.ignore();
                     continue;
                 }
 
-                if (opStack.size() != 0 && priority(currentSymbol) <= priority(opStack.show_top())) {
-                    if (!calculation(&numStack, &opStack)) {
+                if (OperatorStack.size() != 0 && priority(symbol) <= priority(
+                        OperatorStack.show_top())) {//Если стек с операциями НЕ пуст, но приоритет текущей операции ниже либо равен верхней в стеке с операциями
+                    if (calculation(&NumberStack, &OperatorStack) == false) { //Если функция вернет "false", то прекращаем работу
                         system("pause");
                         return 0;
                     }
                     continue;
                 }
             }
-            if (currentSymbol == '(') {
-                opStack.push(currentSymbol);
-                strStream.ignore();
+            if (symbol == '(') { //Если прочитана открывающаяся скобка
+                OperatorStack.push(symbol); //Операция кладется в стек с операциями
+                sstr.ignore();
                 continue;
             }
-            if (currentSymbol == ')') {
-                while (opStack.show_top() != '(') {
-                    if (!calculation(&numStack, &opStack)) {
+            if (symbol == ')') { //Если прочитана закрывающаяся скобка
+                while (OperatorStack.show_top() != '(') {
+                    if (calculation(&NumberStack, &OperatorStack) ==
+                        false) { //Если функция вернет "false", то прекращаем работу
                         system("pause");
                         return 0;
-                    } else continue;
+                    } else continue; //Если все хорошо
                 }
-                opStack.pop();
-                strStream.ignore();
+                OperatorStack.pop();
+                sstr.ignore();
                 continue;
-            } else {
-                std::cout << "\nWrong expression!\n";
+            } else { //Если прочитан какой-то странный символ
+                std::cout << "\nWrong Expression!\n";
                 system("pause");
                 return 0;
             }
         }
-        while (opStack.size() != 0) {
-            if (!calculation(&numStack, &opStack)) {
+        while (OperatorStack.size() != 0) { //Вызываем матем. функцию до тех пор, пока в стеке с операциями не будет 0 элементов
+            if (calculation(&NumberStack, &OperatorStack) == false) { //Если функция вернет "false", то прекращаем работу
                 system("pause");
                 return 0;
-            } else continue;
+            } else continue; //Если все хорошо
         }
-        std::cout << "Answer: " << numStack.show_top() << std::endl;
+        std::cout << "Answer: " << NumberStack.show_top() << std::endl; //Выводим ответ
+        system("pause");
     }
     return 0;
 }
@@ -206,11 +215,13 @@ double Sin(double x) {
 double Cos(double x) {
     return (round(cos(x) * 10000000) / 10000000);
 }
+double Tg(double x) {
+    return Sin(x) / Cos(x);
+}
 
 double Ctg(double x) {
     return Cos(x) / Sin(x);
 }
-
 bool calculation(Stack *NumberStack, Stack *OperatorStack){
     double operand2, operand1, rez;
     operand2 = NumberStack->pop();
