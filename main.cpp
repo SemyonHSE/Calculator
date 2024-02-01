@@ -21,7 +21,7 @@ std::string replaceSymbolWithNumber(std::string& a) {
     while (flag)
     {
         flag = 0;
-        if (97<=a[0] && a[0]<=122 && (a[1] < 97 || a[1]>122) && a[0]!='p')
+        if (97<=a[0] && a[0]<=122 && (a[1] < 97 || a[1]>122) && a[0]!='p'&& a[0] != 'e')
         {
             std::string param;
             std::cout << a[0] << '=';
