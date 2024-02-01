@@ -12,6 +12,7 @@ double Stack::pop()
 {
 	if (top >= 0)
 		return arr[top--];
+    return 0;
 }
 
 bool Stack::isEmpty() const
