@@ -82,6 +82,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+<<<<<<< HEAD
 		<Unit filename="Z:/c++/Calculator/ExpressionCalculator.cpp">
 			<Option target="Calculator"/>
 		</Unit>
@@ -97,6 +98,17 @@
 		<Unit filename="Z:/c++/Calculator/stack/stack.h">
 			<Option target="Calculator"/>
 		</Unit>
+=======
+		<Unit filename="Z:/c++/Calculator/main.cpp">
+			<Option target="Calculator"/>
+		</Unit>
+		<Unit filename="Z:/c++/Calculator/stack/stack.cpp">
+			<Option target="Calculator"/>
+		</Unit>
+		<Unit filename="Z:/c++/Calculator/stack/stack.h">
+			<Option target="Calculator"/>
+		</Unit>
+>>>>>>> main
 		<Unit filename="Z:/c++/Calculator/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
