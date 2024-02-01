@@ -210,6 +210,7 @@ double Cos(double x) {
 double Ctg(double x) {
     return Cos(x) / Sin(x);
 }
+
 bool calculation(Stack *NumberStack, Stack *OperatorStack){
     double operand2, operand1, rez;
     operand2 = NumberStack->pop();

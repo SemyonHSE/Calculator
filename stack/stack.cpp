@@ -12,8 +12,6 @@ double Stack::pop()
 {
 	if (top >= 0)
 		return arr[top--];
-	else
-		std::cerr << "Stack underflow!" << std::endl;
 }
 
 bool Stack::isEmpty() const
