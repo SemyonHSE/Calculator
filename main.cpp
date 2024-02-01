@@ -293,7 +293,7 @@ bool calculation(Stack *NumberStack, Stack *OperatorStack){
         OperatorStack->pop();
     }
     else{
-        cerr<<"Error";
+        cerr<<"\nWrong Expression!\n";
         return false;
     }
     return true;
