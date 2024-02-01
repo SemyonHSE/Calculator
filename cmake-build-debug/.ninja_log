@@ -1,8 +1,11 @@
 # ninja log v5
-4	513	7285076695906299	build.ninja	fcdeadac80c6c5f6
+4	513	7285156887799061	build.ninja	fcdeadac80c6c5f6
 7	1202	7285076710376099	CMakeFiles/Calculator.dir/stack/stack.cpp.obj	5c8e8f2456e3a79d
-10	98	7285077357829670	CMakeFiles/Calculator.dir/determine/checking.cpp.obj	6a5a874c0b9558eb
 5	606	7285077362909664	CMakeFiles/Calculator.dir/main.cpp.obj	1457998ef229513e
-21	747	7285077364329651	CMakeFiles/Calculator.dir/determine/result_generate.cpp.obj	684cbb7f143796f
-15	754	7285077364409648	CMakeFiles/Calculator.dir/determine/writing_to_stack.cpp.obj	7a3eef013dbca4e6
 755	988	7285077366689665	Calculator.exe	4e70ab6344651cb5
+5	638	7285156922629947	CMakeFiles/Calculator.dir/stack/stack.cpp.obj	5c8e8f2456e3a79d
+10	789	7285156924139949	CMakeFiles/Calculator.dir/main.cpp.obj	1457998ef229513e
+4	743	7285158149820572	CMakeFiles/Calculator.dir/main.cpp.obj	1457998ef229513e
+4	705	7285160480065396	CMakeFiles/Calculator.dir/main.cpp.obj	1457998ef229513e
+5	759	7285160787808665	CMakeFiles/Calculator.dir/main.cpp.obj	1457998ef229513e
+760	868	7285160788868667	Calculator.exe	ed64064afb3535c4

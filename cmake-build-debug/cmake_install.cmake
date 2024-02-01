@@ -1,4 +1,4 @@
-# Install script for directory: D:/Семён/ВШЭ/Программирование С и С++/projects/calculator/Calculator
+# Install script for directory: C:/Users/Kirill/Desktop/calc/Calculator
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/Семён/ВШЭ/Программирование С и С++/projects/calculator/Calculator/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/Kirill/Desktop/calc/Calculator/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
