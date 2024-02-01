@@ -1,11 +1,28 @@
+# Игнорировать директории и файлы, созданные CLion
+.idea/
+
+# Игнорировать временные файлы и бинарные файлы
+*.o
+*.out
+*.app
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Игнорировать файлы, созданные компиляцией
+CMakeFiles/
+cmake-build-debug/
+cmake-build-release/
+
+# Игнорировать файлы и директории, связанные с Makefile
+Makefile
 CMakeLists.txt.user
 CMakeCache.txt
-CMakeFiles
-CMakeScripts
-Testing
-Makefile
+CMakeScripts/
+Testing/
 cmake_install.cmake
 install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
-_deps
+_deps/
