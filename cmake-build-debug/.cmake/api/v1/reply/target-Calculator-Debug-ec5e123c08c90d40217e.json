@@ -53,10 +53,7 @@
 			"sourceIndexes" : 
 			[
 				0,
-				1,
-				2,
-				4,
-				6
+				1
 			]
 		}
 	],
@@ -94,20 +91,14 @@
 			"sourceIndexes" : 
 			[
 				0,
-				1,
-				2,
-				4,
-				6
+				1
 			]
 		},
 		{
 			"name" : "Header Files",
 			"sourceIndexes" : 
 			[
-				3,
-				5,
-				7,
-				8
+				2
 			]
 		}
 	],
@@ -124,39 +115,6 @@
 			"compileGroupIndex" : 0,
 			"path" : "stack/stack.cpp",
 			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "determine/checking.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "determine/checking.h",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "determine/result_generate.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "determine/result_generate.h",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "determine/writing_to_stack.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "determine/writing_to_stack.h",
-			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
