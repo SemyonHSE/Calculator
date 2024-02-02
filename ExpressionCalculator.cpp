@@ -5,16 +5,188 @@
 
 ExpressionCalculator::ExpressionCalculator() = default;
 
+int ExpressionCalculator::getPriority(char symbol) {
+    if (symbol == 's' || symbol == 'c' || symbol == 't' || symbol == 'g' || symbol == 'e')
+        return 4;
+    else if (symbol == '^')
+        return 3;
+    else if (symbol == '+' || symbol == '-')
+        return 1;
+    else if (symbol == '*' || symbol == '/' || symbol == '%')
+        return 2;
+    else return 0;
+}
+
+double ExpressionCalculator::calculateSin(double x) {
+    return (round(sin(x) * 10000000) / 10000000);
+}
+
+double ExpressionCalculator::calculateCos(double x) {
+    return (round(cos(x) * 10000000) / 10000000);
+}
+
+double ExpressionCalculator::calculateTan(double x) {
+    return calculateSin(x) / calculateCos(x);
+}
+
+double ExpressionCalculator::calculateCotan(double x) {
+    return calculateCos(x) / calculateSin(x);
+}
+
+bool ExpressionCalculator::performCalculation() {
+    double operand2, operand1, result;
+    operand2 = NumberStack.pop();
+
+    if (OperatorStack.show_top() == '+') {
+        operand1 = NumberStack.pop();
+        result = operand1 + operand2;
+        NumberStack.push(result);
+        OperatorStack.pop();
+    } else if (OperatorStack.show_top() == '-') {
+        operand1 = NumberStack.pop();
+        result = operand1 - operand2;
+        NumberStack.push(result);
+        OperatorStack.pop();
+    }else if (OperatorStack.show_top() == '*') {
+        operand1 = NumberStack.pop();
+        result = operand1 * operand2;
+        NumberStack.push(result);
+        OperatorStack.pop();
+    } else if (OperatorStack.show_top() == '/') {
+        if (operand2 == 0) {
+            std::cerr << "\nIt cannot be divided by 0!\n";
+            return false;
+        }
+        operand1 = NumberStack.pop();
+        result = operand1 / operand2;
+        NumberStack.push(result);
+        OperatorStack.pop();
+    } else if (OperatorStack.show_top() == '%') {
+        operand1 = NumberStack.pop();
+        //result = modf(operand1, &operand2);
+        result = fmod(operand1, operand2);
+        NumberStack.push(result);
+        OperatorStack.pop();
+    }else if (OperatorStack.show_top() == '^') {
+        operand1 = NumberStack.pop();
+        result = pow(operand1, operand2);
+        NumberStack.push(result);
+        OperatorStack.pop();
+    } else if (OperatorStack.show_top() == 's') {
+        result = calculateSin(operand2);
+        NumberStack.push(result);
+        OperatorStack.pop();
+    } else if (OperatorStack.show_top() == 'c') {
+        result = calculateCos(operand2);
+        NumberStack.push(result);
+        OperatorStack.pop();
+    } else if (OperatorStack.show_top() == 't') {
+        if (calculateCos(operand2) == 0) {
+            std::cerr << "\nInvalid argument for tangent!\n";
+            return false;
+        }
+
+        result = calculateTan(operand2);
+        NumberStack.push(result);
+        OperatorStack.pop();
+    } else if (OperatorStack.show_top() == 'g') {
+        if (calculateSin(operand2) == 0) {
+            std::cerr << "\nInvalid argument for cotangence!\n";
+            return false;
+        }
+
+        result = calculateCotan(operand2);
+        NumberStack.push(result);
+        OperatorStack.pop();
+    } else if (OperatorStack.show_top() == 'e') {
+        result = exp(operand2);
+        NumberStack.push(result);
+        OperatorStack.pop();
+    } else {
+        std::cerr << "Error";
+        return false;
+    }
+
+    return true;
+}
+
+std::string ExpressionCalculator::replaceSymbolWithNumber(std::string &expression) {
+    int length = expression.length();
+    int flag = 1;
+
+    while (flag) {
+        flag = 0;
+
+        if (97 <= expression[0] && expression[0] <= 122 && (expression[1] < 97 || expression[1] > 122) && expression[0] != 'p') {
+            std::string param;
+            std::cout << expression[0] << '=';
+            std::cin >> param;
+            char current = expression[0];
+
+            for (int j = 1; j < length; ++j) {
+                if (expression[j] == current && (expression[j - 1] < 97 || expression[j - 1] > 122) &&
+                    (expression[j + 1] < 97 || expression[j + 1] > 122) && expression[j] != 'p') {
+                    expression.replace(j, 1, param);
+                }
+            }
+
+            expression.replace(0, 1, param);
+        }
+
+        for (int i = 1; i < length; ++i) {
+            if (expression[i] >= 97 && expression[i] <= 122 &&
+                (expression[i - 1] < 97 || expression[i - 1] > 122) &&
+                (expression[i + 1] < 97 || expression[i + 1] > 122) && expression[i] != 'p') {
+                std::string param;
+                std::cout << expression[i] << '=';
+                std::cin >> param;
+                char current = expression[i];
+
+                for (int j = i + 1; j < length; ++j) {
+                    if (expression[j] == current && (expression[j - 1] < 97 || expression[j - 1] > 122) &&
+                        (expression[j + 1] < 97 || expression[j + 1] > 122)&& expression[j] != 'p') {
+                        expression.replace(j, 1, param);
+                    }
+                }
+
+                expression.replace(i, 1, param);
+            }
+        }
+
+        length = expression.length();
+
+        if (97 <= expression[0] && expression[0] <= 122 && (expression[1] < 97 || expression[1] > 122) && expression[0] != 'p') {
+            flag = 1;
+        } else {
+            for (int i = 1; i < length; ++i) {
+                if (expression[i] >= 97 && expression[i] <= 122 &&
+                    (expression[i - 1] < 97 || expression[i - 1] > 122) &&
+                    (expression[i + 1] < 97 || expression[i + 1] > 122) && expression[i] != 'p') {
+                    flag = 1;
+                }
+            }
+        }
+    }
+
+    return expression;
+}
+
+
 void ExpressionCalculator::runCalculator() {
     while (true) {
         std::cout << "Type your expression" << std::endl;
         std::string inputExpression;
         getline(std::cin, inputExpression);
+
+        ExpressionCalculator::replaceSymbolWithNumber(inputExpression);
+
         std::stringstream sstream{inputExpression};
 
         char currentSymbol;
         double value;
         bool negative = true;
+
+
 
         while (true) {
             currentSymbol = sstream.peek();
@@ -76,7 +248,7 @@ void ExpressionCalculator::runCalculator() {
             }
 
             if (currentSymbol == '+' || currentSymbol == '-' && negative == 0 || currentSymbol == '*' ||
-                currentSymbol == '/' || currentSymbol == '^') {
+                currentSymbol == '/' || currentSymbol == '%' || currentSymbol == '^') {
                 if (OperatorStack.size() == 0) {
                     OperatorStack.push(currentSymbol);
                     sstream.ignore();
@@ -132,163 +304,3 @@ void ExpressionCalculator::runCalculator() {
     }
 }
 
-int ExpressionCalculator::getPriority(char symbol) {
-    if (symbol == 's' || symbol == 'c' || symbol == 't' || symbol == 'g' || symbol == 'e')
-        return 4;
-    else if (symbol == '^')
-        return 3;
-    else if (symbol == '+' || symbol == '-')
-        return 1;
-    else if (symbol == '*' || symbol == '/')
-        return 2;
-    else return 0;
-}
-
-double ExpressionCalculator::calculateSin(double x) {
-    return (round(sin(x) * 10000000) / 10000000);
-}
-
-double ExpressionCalculator::calculateCos(double x) {
-    return (round(cos(x) * 10000000) / 10000000);
-}
-
-double ExpressionCalculator::calculateTan(double x) {
-    return calculateSin(x) / calculateCos(x);
-}
-
-double ExpressionCalculator::calculateCotan(double x) {
-    return calculateCos(x) / calculateSin(x);
-}
-
-bool ExpressionCalculator::performCalculation() {
-    double operand2, operand1, result;
-    operand2 = NumberStack.pop();
-
-    if (OperatorStack.show_top() == '+') {
-        operand1 = NumberStack.pop();
-        result = operand1 + operand2;
-        NumberStack.push(result);
-        OperatorStack.pop();
-    } else if (OperatorStack.show_top() == '-') {
-        operand1 = NumberStack.pop();
-        result = operand1 - operand2;
-        NumberStack.push(result);
-        OperatorStack.pop();
-    } else if (OperatorStack.show_top() == '*') {
-        operand1 = NumberStack.pop();
-        result = operand1 * operand2;
-        NumberStack.push(result);
-        OperatorStack.pop();
-    } else if (OperatorStack.show_top() == '/') {
-        if (operand2 == 0) {
-            std::cerr << "\nIt cannot be divided by 0!\n";
-            return false;
-        }
-
-        operand1 = NumberStack.pop();
-        result = operand1 / operand2;
-        NumberStack.push(result);
-        OperatorStack.pop();
-    } else if (OperatorStack.show_top() == '^') {
-        operand1 = NumberStack.pop();
-        result = pow(operand1, operand2);
-        NumberStack.push(result);
-        OperatorStack.pop();
-    } else if (OperatorStack.show_top() == 's') {
-        result = calculateSin(operand2);
-        NumberStack.push(result);
-        OperatorStack.pop();
-    } else if (OperatorStack.show_top() == 'c') {
-        result = calculateCos(operand2);
-        NumberStack.push(result);
-        OperatorStack.pop();
-    } else if (OperatorStack.show_top() == 't') {
-        if (calculateCos(operand2) == 0) {
-            std::cerr << "\nInvalid argument for tangent!\n";
-            return false;
-        }
-
-        result = calculateTan(operand2);
-        NumberStack.push(result);
-        OperatorStack.pop();
-    } else if (OperatorStack.show_top() == 'g') {
-        if (calculateSin(operand2) == 0) {
-            std::cerr << "\nInvalid argument for cotangence!\n";
-            return false;
-        }
-
-        result = calculateCotan(operand2);
-        NumberStack.push(result);
-        OperatorStack.pop();
-    } else if (OperatorStack.show_top() == 'e') {
-        result = exp(operand2);
-        NumberStack.push(result);
-        OperatorStack.pop();
-    } else {
-        std::cerr << "Error";
-        return false;
-    }
-
-    return true;
-}
-
-std::string ExpressionCalculator::replaceSymbolWithNumber(std::string &expression) {
-    int length = expression.length();
-    int flag = 1;
-
-    while (flag) {
-        flag = 0;
-
-        if (97 <= expression[0] && expression[0] <= 122 && (expression[1] < 97 || expression[1] > 122)) {
-            std::string param;
-            std::cout << expression[0] << '=';
-            std::cin >> param;
-            char current = expression[0];
-
-            for (int j = 1; j < length; ++j) {
-                if (expression[j] == current && (expression[j - 1] < 97 || expression[j - 1] > 122) &&
-                    (expression[j + 1] < 97 || expression[j + 1] > 122)) {
-                    expression.replace(j, 1, param);
-                }
-            }
-
-            expression.replace(0, 1, param);
-        }
-
-        for (int i = 1; i < length; ++i) {
-            if (expression[i] >= 97 && expression[i] <= 122 &&
-                (expression[i - 1] < 97 || expression[i - 1] > 122) &&
-                (expression[i + 1] < 97 || expression[i + 1] > 122)) {
-                std::string param;
-                std::cout << expression[i] << '=';
-                std::cin >> param;
-                char current = expression[i];
-
-                for (int j = i + 1; j < length; ++j) {
-                    if (expression[j] == current && (expression[j - 1] < 97 || expression[j - 1] > 122) &&
-                        (expression[j + 1] < 97 || expression[j + 1] > 122)) {
-                        expression.replace(j, 1, param);
-                    }
-                }
-
-                expression.replace(i, 1, param);
-            }
-        }
-
-        length = expression.length();
-
-        if (97 <= expression[0] && expression[0] <= 122 && (expression[1] < 97 || expression[1] > 122)) {
-            flag = 1;
-        } else {
-            for (int i = 1; i < length; ++i) {
-                if (expression[i] >= 97 && expression[i] <= 122 &&
-                    (expression[i - 1] < 97 || expression[i - 1] > 122) &&
-                    (expression[i + 1] < 97 || expression[i + 1] > 122)) {
-                    flag = 1;
-                }
-            }
-        }
-    }
-
-    return expression;
-}
